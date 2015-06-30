@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>AFDPlayer canvas sample</title>
+		<script src="../libs/jquery/jquery-1.11.2.min.js"></script>
+		<!-- Load local QUnit. -->
+		<link rel="stylesheet" href="../css/jquery.afdplayer.css">
+		<!-- Load local lib and tests. -->
+		<script src="jquery.afdplayer.js"></script>
+		<!-- Removing access to jQuery and $. But it'll still be available as _$, if
+       you REALLY want to mess around with jQuery in the console. REMEMBER WE
+       ARE TESTING A PLUGIN HERE, THIS HELPS ENSURE BEST PRACTICES. REALLY. -->
+		<script>
+			window._$ = jQuery.noConflict(true);
+		</script>
+	</head>
+
+	<body>
+		<div style="width: 600px; height: 600px; margin:200px auto;">
+			<audio class="afd play" controls id="a1">
+				<source src="../audio/Imagine Me Without You.mp3" type="audio/mp3" />
+			</audio>
+		</div>
+		<script>
+			_$('audio').afdplayer();
+		</script>
+	</body>
+
+</html>

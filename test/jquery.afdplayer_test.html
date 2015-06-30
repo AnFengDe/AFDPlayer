@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>jQuery mobile number Test Suite</title>
+		<script src="../libs/jquery/jquery-1.11.2.min.js"></script>
+		<!-- Load local QUnit. -->
+		<link rel="stylesheet" href="../libs/qunit/qunit.css">
+		<link rel="stylesheet" href="../css/jquery.afdplayer.css">
+		<script src="../libs/qunit/qunit.js"></script>
+		<!-- Load local lib and tests. -->
+		<script src="../src/jquery.afdplayer.js"></script>
+		<script src="jquery.afdplayer_test.js"></script>
+		<!-- Removing access to jQuery and $. But it'll still be available as _$, if
+       you REALLY want to mess around with jQuery in the console. REMEMBER WE
+       ARE TESTING A PLUGIN HERE, THIS HELPS ENSURE BEST PRACTICES. REALLY. -->
+		<script>
+			window._$ = jQuery.noConflict(true);
+		</script>
+	</head>
+
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture" style="top: 500px; left: 0px;">
+			<audio class="afd play" controls id="a1">
+				<source src="../audio/Imagine Me Without You.mp3" type="audio/mp3" />
+			</audio>
+			<audio id="a2"></audio>
+			<audio src="../audio/Miss You - WestLife.m4a" id="a3">
+				<source type="audio/aac" codes="aac" />
+			</audio>
+		</div>
+		<div id="dev-container" style="display: inline-block; width: 100%;">
+			<div class="afd player container">
+				<!--<canvas class="progress" id="c1" width="24px" height="24px"></canvas>-->
+				<svg class="progress" width="24px" height="24px">
+					<path fill="none" stroke="blue" stroke-width="3" />
+				</svg>
+				<a class="play" href="#">0:48</a>
+				<audio id="dev" lid="201410209999999953739493">
+					<source src="../audio/15 seconds.mp3" type="audio/mp3" />
+				</audio>
+			</div>
+		</div>
+		<script>
+			function cb_togglePlay(o, b) {
+					if (o.paused || o.ended) {
+						o.play();
+						b.classList.remove("play");
+						b.classList.add("pause");
+					} else {
+						o.pause();
+						b.classList.remove("pause");
+						b.classList.add("play");
+					}
+				}
+				//			function cb_progress(o, c, l) {
+				//				var percent = Math.floor((100 / o.duration) * o.currentTime);
+				//				console.log(o.id + "播放进度：" + percent);
+				//				progress.value = percent;
+				//				var canvas = c;
+				//				var context = canvas.getContext('2d');
+				//				var centerX = canvas.width / 2;
+				//				var centerY = canvas.height / 2;
+				//				var radius = centerY - 1;
+				//				var circ = Math.PI * 2;
+				//				var cpercent = percent / 100;
+				//				context.beginPath();
+				//				context.arc(centerX, centerY, radius, 0, circ * cpercent, false);
+				//				context.lineWidth = 1;
+				//				context.strokeStyle = '#FF4C97';
+				//				context.stroke();
+				//				if (percent >= 1) {
+				//					l.textContent = (percent + "%");
+				//				}
+				//				if (o.ended) {
+				//					o.currentTime = 0;
+				//					l.textContent = (duration);
+				//					context.clearRect(0, 0, canvas.width, canvas.height);
+				//				}
+				//			}
+
+			function svg_progress(o, c, l) {
+				var percent = Math.floor((100 / o.duration) * o.currentTime);
+				var radius = 10;
+				var centerX = 12;
+				var centerY = 12;
+				var startX = centerX;
+				var startY = centerY - radius;
+				var xAxisRotation = 0;
+				var sweepFlag = 1;
+				var cppercent = percent / 100;
+				var circ = Math.PI * 2;
+				if (cppercent * circ >= Math.PI) {
+					largeArcFlag = 1;
+				} else {
+					largeArcFlag = 0;
+				}
+				var endX = centerX + radius * Math.sin(circ * cppercent);
+				var endY = centerY - radius * Math.cos(circ * cppercent);
+				var d = "M" + startX + "," + startY + " " + "A" + radius + "," + radius + " " + xAxisRotation + " " + largeArcFlag + " " + sweepFlag + " " + endX + "," + endY;
+				progress.setAttribute("d", d);
+				if (percent >= 1) {
+					l.textContent = (percent + "%");
+				}
+				if (o.ended) {
+					o.currentTime = 0;
+					l.textContent = (duration);
+					l.classList.remove('pause');
+					l.classList.add('play');
+				}
+			}
+			music = document.getElementById('dev');
+			 //progress = _$("canvas.progress")[0];
+			progress = _$("path")[0];
+			label = _$('.afd.player a')[0];
+			duration = label.textContent;
+			music.addEventListener('timeupdate', function() {
+				//				cb_progress(music, progress, label);
+				svg_progress(music, progress, label);
+			}, false);
+			container = _$(".afd.player")[0];
+			btnPlay = _$(".afd.player .play")[0];
+			container.addEventListener('click', function() {
+				cb_togglePlay(music, btnPlay);
+			}, false);
+		</script>
+
+		<canvas id="myCanvas" width="25px" height="25px" style="left:100px;">
+			Your browser does not support the HTML5 canvas tag.
+		</canvas>
+
+		<script>
+			var c = document.getElementById("myCanvas");
+			var ctx = c.getContext("2d");
+			ctx.beginPath();
+			ctx.arc(100, 75, 12.5, 0, 2 * Math.PI);
+			ctx.fillStyle = '#FF4C97';
+			ctx.fill();
+			ctx.strokeStyle = '#FF4C97';
+			ctx.stroke();
+		</script>
+		<div class="wrapper">
+			<div class="arc arc_start"></div>
+			<div class="arc arc_end"></div>
+		</div>
+		<audio src="../audio/Miss You - WestLife.m4a" class="afd play" controls id="a4">
+			<source type="audio/aac" codes="aac" />
+		</audio>
+	</body>
+
+</html>
