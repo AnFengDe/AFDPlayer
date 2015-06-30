@@ -1,0 +1,26 @@
+{
+  "name": "AFDPlayer",
+  "title": "音乐播放插件",
+  "description": "音乐播放插件JS代码",
+  "version": "1.0.0",
+  "homepage": "",
+  "author": {
+    "name": "AFD Team",
+    "email": "afd@anfengde.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://chtian@localhost/svn/git/KuRingDiy.git"
+  },
+  "bugs": "",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "keywords": []
+}
