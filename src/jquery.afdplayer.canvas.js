@@ -34,6 +34,9 @@
 				if (o.ended) {
 					o.currentTime = 0;
 					ctx.clearRect(0, 0, c.width, c.height);
+					var l = this.cb_getAFDPlayer(o);
+					l.classList.remove('pause');
+					l.classList.add('play');
 				}
 			}
 		}

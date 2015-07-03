@@ -139,6 +139,7 @@
 				opts.cb_setLabel(o);
 				if (o.ended) {
 					o.currentTime = 0;
+					var l = this.cb_getAFDPlayer(o);
 					l.classList.remove('pause');
 					l.classList.add('play');
 				}
