@@ -146,7 +146,6 @@
 			},
 			cb_create: function(o) {
 				$(o).wrap("<div class=\"afd player container\"></div>");
-				//				var h = "<canvas class=\"progress\" width=\"24px\" height=\"24px\"></canvas><a class=\"play\" href=\"#\"></a>";
 				var h = "<svg  class=\"progress\" width=\"24px\" height=\"24px\"><path/></svg><a class=\"play\" href=\"#\"></a>";
 				$(h).insertBefore($(o));
 			},
