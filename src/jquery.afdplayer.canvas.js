@@ -7,7 +7,6 @@
 (function($) {
 	$.fn.afdplayer.prototype = {
 		defaults: {
-			strict: false,
 			cb_create: function(o) {
 				$(o).wrap("<div class=\"afd player container\"></div>");
 				var h = "<canvas class=\"progress\" width=\"250px\" height=\"250px\"></canvas><a class=\"play\" href=\"#\"></a>";
