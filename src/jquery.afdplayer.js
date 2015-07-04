@@ -91,6 +91,12 @@
 						$.each($('audio'), function() {
 							this.pause();
 							$(this).parent().find('a').removeClass("pause").addClass("play");
+							//--------------todo....
+							$(this.parentNode).find("path")[0].removeAttribute("d");
+							$(this.parentNode).find('a')[0].textContent = formatDuration(this);
+							if (this.currentTime > 0) {
+								this.currentTime = 0;
+							}
 						});
 						o.play();
 						b.classList.remove("play");
@@ -115,7 +121,7 @@
 			cb_progress: function(o) {
 				var percent = Math.floor((100 / o.duration) * o.currentTime);
 				var svg = getSvg(o);
-				var radius = 10;
+				var radius = 11;
 				var centerX = svg.width.animVal.value / 2;
 				var centerY = svg.height.animVal.value / 2;
 				var startX = centerX;
@@ -134,14 +140,15 @@
 				var path = getSvgPath(o);
 				path.setAttribute("d", d);
 				path.setAttribute("fill", "none");
-				path.setAttribute("stroke", "blue");
-				path.setAttribute("stroke-width", 3);
+				path.setAttribute("stroke", "#007aff");
+				path.setAttribute("stroke-width", 2);
 				opts.cb_setLabel(o);
+				var p = opts.cb_getAFDPlayer(o);
 				if (o.ended) {
 					o.currentTime = 0;
-					var l = this.cb_getAFDPlayer(o);
-					l.classList.remove('pause');
-					l.classList.add('play');
+					p.textContent = formatDuration(o);
+					p.classList.remove('pause');
+					p.classList.add('play');
 				}
 			},
 			cb_create: function(o) {
@@ -158,8 +165,8 @@
 				return $(p).find('a')[0];
 			},
 			cb_setLabel: function(o) {
+				var p = opts.cb_getAFDPlayer(o);
 				if (o.ended || o.currentTime === 0) {
-					p = opts.cb_getAFDPlayer(o);
 					p.textContent = formatDuration(o);
 				} else {
 					var percent = Math.floor((100 / o.duration) * o.currentTime);
@@ -170,7 +177,7 @@
 
 		return this.each((function() {
 			return function() {
-				if (this.getAttribute('init') === 'true'){
+				if (this.getAttribute('init') === 'true') {
 					return;
 				}
 				opts = $.extend({}, opts, $.fn.afdplayer.prototype.defaults, options);
