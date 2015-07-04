@@ -148,6 +148,7 @@
 				$(o).wrap("<div class=\"afd player container\"></div>");
 				var h = "<svg  class=\"progress\" width=\"24px\" height=\"24px\"><path/></svg><a class=\"play\" href=\"#\"></a>";
 				$(h).insertBefore($(o));
+				o.setAttribute('init', 'true');
 			},
 			cb_getContainer: function(o) {
 				return o.parentNode;
@@ -169,6 +170,9 @@
 
 		return this.each((function() {
 			return function() {
+				if (this.getAttribute('init') === 'true'){
+					return;
+				}
 				opts = $.extend({}, opts, $.fn.afdplayer.prototype.defaults, options);
 
 				//如果是严格限定class的audio tag, 不符合要求的不会处理

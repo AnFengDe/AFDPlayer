@@ -17,7 +17,14 @@
 		this.elems.afdplayer();
 		strictEqual($('#qunit-fixture').find('.afd.player').length, 1, '初始测试数据只有一个符合要求');
 	});
-
+	test('重复初始化测试',function(){
+		expect(1);
+		var count1 = $('#qunit-fixture').find('a').length;
+		this.elems.afdplayer();
+		this.elems.afdplayer();
+		var count2 = $('#qunit-fixture').find('a').length;
+		strictEqual(count1 === 0 && count2 === 1, true, '链接数量不变');
+	});
 	test('强制所有audio转成要求的对象', function() {
 		expect(1);
 		this.elems.afdplayer({
