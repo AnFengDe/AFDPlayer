@@ -88,12 +88,11 @@
 
 				if (opts.singlePlay) {
 					if (o.paused) {
-						$.each($('audio'), function() {
+						$.each($('.afd.player.container audio'),function(){
 							this.pause();
 							$(this).parent().find('a').removeClass("pause").addClass("play");
-							//--------------todo....
 							$(this.parentNode).find("path")[0].removeAttribute("d");
-							$(this.parentNode).find('a')[0].textContent = formatDuration(this);
+							opts.cb_setLabel(this);
 							if (this.currentTime > 0) {
 								this.currentTime = 0;
 							}
