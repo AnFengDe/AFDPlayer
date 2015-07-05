@@ -88,15 +88,17 @@
 
 				if (opts.singlePlay) {
 					if (o.paused) {
-						$.each($('.afd.player.container audio'),function(){
+						$.each($('.afd.player.container audio'), function() {
 							this.pause();
-							$(this).parent().find('a').removeClass("pause").addClass("play");
+							b.classList.remove("pause");
+							b.classList.add("play");
+
 							//保证同一首歌播放暂停时svg进度不会被清除
-							if(o !== this){
+							if (o !== this) {
 								getSvgPath(this).removeAttribute("d");
 							}
-                            //保证同一首歌播放暂停时播放时间不会归0
-							if (this.currentTime > 0 && o !==this) {
+							//保证同一首歌播放暂停时播放时间不会归0
+							if (this.currentTime > 0 && o !== this) {
 								this.currentTime = 0;
 							}
 							opts.cb_setLabel(this);
