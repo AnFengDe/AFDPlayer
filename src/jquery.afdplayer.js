@@ -85,32 +85,28 @@
 			singlePlay: true,
 			cb_click: function(o) {
 				var b = opts.cb_getAFDPlayer(o);
-
 				if (opts.singlePlay) {
-					if (o.paused) {
-						$.each($('.afd.player.container audio'), function() {
+					//找出所有的不是自身的audio进行状态处理
+					$.each($('.afd.player.container audio'), function() {
+						if (this === o) {
+							return;
+						}
+						if (!this.paused) {
 							this.pause();
-							//TODO:奇怪为什么下面的写法不通过
-							$(this).parent().find('a').removeClass('pause').addClass('play');
-							//							b.classList.remove("pause");
-							//							b.classList.add("play");
-
-							//保证同一首歌播放暂停时svg进度不会被清除
-							if (o !== this) {
-								getSvgPath(this).removeAttribute("d");
-							}
-							//保证同一首歌播放暂停时播放时间不会归0
-							if (this.currentTime > 0 && o !== this) {
-								this.currentTime = 0;
-							}
+							this.currentTime = 0;
 							opts.cb_setLabel(this);
-						});
+							opts.cb_setStyle(this, 'play');
+						}
+					});
+
+					if (o.paused) {
 						o.play();
-						opts.cb_setStyle(o, 'load');
+						opts.cb_setStyle(o, o.currentTime > 0 ? 'pause' : 'load');
 					} else {
 						o.pause();
 						opts.cb_setStyle(o, 'play');
 					}
+					opts.cb_setLabel(o);
 				} else {
 					if (o.paused || o.ended) {
 						o.play();
@@ -151,7 +147,7 @@
 					o.currentTime = 0;
 					p.textContent = formatDuration(o);
 					opts.cb_setStyle(o, 'play');
-				} else {
+				} else if (!o.paused) {
 					opts.cb_setStyle(o, 'pause');
 				}
 			},
@@ -174,12 +170,13 @@
 				if (p.classList.contains(s)) {
 					return;
 				}
-				p.classList.remove('pause');
-				p.classList.remove('play');
-				p.classList.remove('load');
 				p.classList.add(s);
-				console.log('change style: ' + s);
-
+				var l = ['play', 'pause', 'load'];
+				var i = l.indexOf(s);
+				l.splice(i, 1);
+				$.each(l, function() {
+					p.classList.remove(this.toString());
+				});
 			},
 			cb_setLabel: function(o) {
 				var p = opts.cb_getAFDPlayer(o);
