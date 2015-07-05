@@ -90,8 +90,10 @@
 					if (o.paused) {
 						$.each($('.afd.player.container audio'), function() {
 							this.pause();
-							b.classList.remove("pause");
-							b.classList.add("play");
+							//TODO:奇怪为什么下面的写法不通过
+							$(this).parent().find('a').removeClass('pause').addClass('play');
+//							b.classList.remove("pause");
+//							b.classList.add("play");
 
 							//保证同一首歌播放暂停时svg进度不会被清除
 							if (o !== this) {
