@@ -91,11 +91,15 @@
 						$.each($('.afd.player.container audio'),function(){
 							this.pause();
 							$(this).parent().find('a').removeClass("pause").addClass("play");
-							$(this.parentNode).find("path")[0].removeAttribute("d");
-							opts.cb_setLabel(this);
-							if (this.currentTime > 0) {
+							//保证同一首歌播放暂停时svg进度不会被清除
+							if(o !== this){
+								getSvgPath(this).removeAttribute("d");
+							}
+                            //保证同一首歌播放暂停时播放时间不会归0
+							if (this.currentTime > 0 && o !==this) {
 								this.currentTime = 0;
 							}
+							opts.cb_setLabel(this);
 						});
 						o.play();
 						b.classList.remove("play");
