@@ -17,7 +17,7 @@
 		this.elems.afdplayer();
 		strictEqual($('#qunit-fixture').find('.afd.player').length, 1, '初始测试数据只有一个符合要求');
 	});
-	test('重复初始化测试',function(){
+	test('重复初始化测试', function() {
 		expect(1);
 		var count1 = $('#qunit-fixture').find('a').length;
 		this.elems.afdplayer();
@@ -40,6 +40,24 @@
 			strictEqual($('#a1')[0].duration, 49.475918, '获取到的音频时间是否符合要求');
 			start();
 		}, 200);
+	});
+	asyncTest('反复动态增加进行测试', function() {
+		expect(2);
+		var html = '<audio class="afd play" controls id="a6"><source src="../audio/Imagine Me Without You.mp3" type="audio/mp3" /></audio>';
+		$(html).insertAfter(this.elems);
+		$('#a6').afdplayer();
+		$('#a6').parent().trigger('click');
+		setTimeout(function() {
+			strictEqual($('#a6')[0].duration, 49.475918, '获取到的音频时间是否符合要求');
+			$('#a6').parent().remove();
+			$(html).insertAfter(this.elems);
+			$('#a6').afdplayer();
+			$('#a6').parent().trigger('click');
+			setTimeout(function() {
+				strictEqual($('#a6')[0].duration, 49.475918, '获取到的音频时间是否符合要求');
+				start();
+			}, 2000);
+		}, 2000);
 	});
 	test('测试id为a2的歌曲获取到的时间是否符合要求', function() {
 		expect(1);
