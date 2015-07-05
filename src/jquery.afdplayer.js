@@ -54,7 +54,7 @@
 		}
 
 		function formatDuration(o) {
-			var d = o.duration;
+			var d = opts.cb_getDuration(o);
 			return (typeof d === 'undefined' || d === null || isNaN(d)) ?
 				"--:--" : Math.floor(d / 60) + ":" + Math.floor(d % 60);
 		}
@@ -117,8 +117,11 @@
 					}
 				}
 			},
+			cb_getDuration: function(o) {
+				return o.duration;
+			},
 			cb_progress: function(o) {
-				var percent = Math.floor((100 / o.duration) * o.currentTime);
+				var percent = Math.floor((100 / opts.cb_getDuration(o)) * o.currentTime);
 				var svg = getSvg(o);
 				var radius = 11;
 				var centerX = svg.width.animVal.value / 2;
@@ -183,7 +186,7 @@
 				if (o.ended || o.currentTime === 0) {
 					p.textContent = formatDuration(o);
 				} else {
-					var percent = Math.floor((100 / o.duration) * o.currentTime);
+					var percent = Math.floor((100 / opts.cb_getDuration(o)) * o.currentTime);
 					p.textContent = percent + "%";
 				}
 			}
