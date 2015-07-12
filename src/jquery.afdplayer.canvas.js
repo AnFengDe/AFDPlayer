@@ -9,7 +9,7 @@
 		defaults: {
 			cb_create: function(o) {
 				$(o).wrap("<div class=\"afd player container\"></div>");
-				var h = "<canvas class=\"progress\" width=\"250px\" height=\"250px\"></canvas><a class=\"play\" href=\"#\"></a>";
+				var h = "<canvas class=\"progress\" width=\"250px\" height=\"250px\"></canvas><a class=\"state play\" href=\"#\"></a>";
 				$(h).insertBefore($(o));
 			},
 			getCanvas: function(o) {
@@ -21,8 +21,8 @@
 				//console.log(o.id + "播放进度：" + percent);
 				var c = this.getCanvas(o);
 				var ctx = c.getContext('2d');
-				var x = c.width / 2 ;
-				var y = c.height / 2 ;
+				var x = c.width / 2;
+				var y = c.height / 2;
 				var r = y - 9;
 				var circ = Math.PI * 2;
 				ctx.beginPath();
@@ -30,13 +30,13 @@
 				ctx.lineWidth = 14;
 				ctx.strokeStyle = '#FF4C97';
 				ctx.stroke();
-				this.cb_setLabel(o);
+				this.cb_setProgressText(o);
 				if (o.ended) {
 					o.currentTime = 0;
 					ctx.clearRect(0, 0, c.width, c.height);
-					var l = this.cb_getAFDPlayer(o);
-					l.classList.remove('pause');
-					l.classList.add('play');
+					this.cb_setStyle(o, 'play');
+				} else if (!o.paused) {
+					this.cb_setStyle(o, 'pause');
 				}
 			}
 		}

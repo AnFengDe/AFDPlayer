@@ -71,7 +71,7 @@
 		}
 	});
 	asyncTest('测试是否调用了回调方法', function() {
-		expect(6);
+		expect(5);
 		var a = 0;
 		var percent = 0;
 		var b = 0;
@@ -111,23 +111,9 @@
 					d = 1;
 				});
 			},
-			cb_progress: function(o) {
-				percent = Math.floor((100 / o.duration) * o.currentTime);
-				var l = $(o.parentNode).find('a')[0];
-				if (percent >= 1) {
-					l.textContent = (percent + "%");
-				}
-			},
-			cb_svgprogress: function(o) {
-				percent = Math.floor((100 / o.duration) * o.currentTime);
-				var l = $(o.parentNode).find('a')[0];
-				if (percent >= 1) {
-					l.textContent = (percent + "%");
-				}
-			},
 			cb_create: function(o) {
 				$(o).wrap("<div class=\"afd player container\"></div>");
-				var h = "<svg  class=\"progress\" width=\"24px\" height=\"24px\"><path/></svg><a class=\"play\" href=\"#\"></a>";
+				var h = "<svg  class=\"progress\" width=\"24px\" height=\"24px\"><path/></svg><a class=\"state play\" href=\"#\"></a>";
 				$(h).insertBefore($(o));
 				e = 1;
 			}
@@ -139,8 +125,6 @@
 
 		setTimeout(function() {
 			strictEqual(a, 1, '是否调用了cb_click方法');
-			//			strictEqual(percent > 0, true, '是否调用了cb_progress方法');
-			strictEqual(percent > 0, true, '是否调用了cb_svgprogress方法');
 			strictEqual(b, 1, '是否是播放状态');
 			strictEqual(c, 1, '是否是暂停状态');
 			strictEqual(d, 1, '是否是播放完成状态');
