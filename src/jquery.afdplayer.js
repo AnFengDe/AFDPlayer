@@ -115,9 +115,7 @@
 						if (this === o) {
 							return;
 						}
-						if (!this.paused) {
-							opts.cb_ended(this);
-						}
+						opts.cb_ended(this);
 					});
 				}
 				if (o.paused || o.ended) {

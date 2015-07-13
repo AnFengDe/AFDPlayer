@@ -39,7 +39,7 @@
 		setTimeout(function() {
 			strictEqual($('#a1')[0].duration, 49.475918, '获取到的音频时间是否符合要求');
 			start();
-		}, 200);
+		}, 500);
 	});
 	asyncTest('反复动态增加进行测试', function() {
 		expect(2);
