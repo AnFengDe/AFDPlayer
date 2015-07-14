@@ -146,7 +146,10 @@
 					if (o.paused) {
 						$.each($('audio'), function() {
 							this.pause();
-							a = 1;
+							if (this.currentTime > 0) {
+								this.currentTime = 0;
+								a=1;
+							}
 							console.log("a=" + a);
 						});
 						o.play();

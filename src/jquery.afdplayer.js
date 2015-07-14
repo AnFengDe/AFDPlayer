@@ -104,7 +104,9 @@
 			},
 			cb_ended: function(o) {
 				o.pause();
-				o.currentTime = 0;
+				if (o.currentTime>0) {
+					o.currentTime = 0;
+				}
 				opts.cb_setProgressText(o);
 				opts.cb_setStyle(o, 'play');
 			},
@@ -148,6 +150,9 @@
 			},
 			cb_setProgress: function(o) {
 				var percent = Math.floor((100 / opts.cb_getDuration(o)) * o.currentTime) / 100;
+				if (percent > 1) {
+					percent = 1;
+				}
 				var svg = opts.cb_getProgressNode(o);
 				var radius = 11,
 					centerX = svg.width.animVal.value / 2,
@@ -224,9 +229,9 @@
 				this.addEventListener('waiting', function() {
 					opts.cb_setStyle(this, 'load');
 				}, false);
-				this.addEventListener('stalled', function() {
-					opts.cb_setStyle(this, 'load');
-				}, false);
+//				this.addEventListener('stalled', function() {
+//					opts.cb_setStyle(this, 'load');
+//				}, false);
 				this.addEventListener('error', function() {
 					opts.cb_ended(this);
 				}, false);
